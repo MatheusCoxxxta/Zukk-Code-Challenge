@@ -34,7 +34,7 @@ const Map = (props: {pointsProps: any}) => {
             <MapboxGL.PointAnnotation
               key={myPoint.id}
               id="pointAnnotation"
-              coordinate={myPoint.coordinates}>
+              coordinate={[myPoint.coordinates.lat, myPoint.coordinates.long]}>
               <View style={styles.pointStyle} />
             </MapboxGL.PointAnnotation>
           ))}

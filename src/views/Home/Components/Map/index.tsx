@@ -31,7 +31,7 @@ const Map = (props: {pointsProps: any}) => {
               key={point.id}
               id="pointAnnotation"
               onSelected={() => deletePoint(point)}
-              coordinate={point.coordinates}>
+              coordinate={[point.coordinates.lat, point.coordinates.long]}>
               <View style={styles.pointStyle} />
             </MapboxGL.PointAnnotation>
           ))}
