@@ -9,14 +9,9 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Text,
-  StatusBar,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
+
+import {Title, SubHeading, MapParentBox} from './styles';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MapboxGL from '@react-native-mapbox-gl/maps';
@@ -33,11 +28,11 @@ const Home = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Text style={styles.sectionDescription}>Hello World!</Text>
-
-          <View style={styles.container}>
+          <Title>Seja Bem Vindo!</Title>
+          <SubHeading>Aplicação Code Challenge da Zukk</SubHeading>
+          <MapParentBox>
             <MapboxGL.MapView style={styles.map} />
-          </View>
+          </MapParentBox>
         </ScrollView>
       </SafeAreaView>
     </>
@@ -47,6 +42,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+    padding: 20,
   },
   engine: {
     position: 'absolute',
@@ -80,11 +76,6 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingRight: 12,
     textAlign: 'right',
-  },
-  container: {
-    height: 300,
-    width: 300,
-    backgroundColor: 'tomato',
   },
   map: {
     flex: 1,
