@@ -11,25 +11,32 @@ MapboxGL.setAccessToken(
   'pk.eyJ1IjoibWF0aGV1c2Nvc3RhMjciLCJhIjoiY2tpdXo2MXNuMDU0bzJxcXR5NmF2bG1oeSJ9.pvbXRP9FDpW2IQYi77HM8w',
 );
 
-const points = [
-  [3.33624, 6.57901],
-  [3.3750014, 6.5367877],
-];
+const Map = (props: {pointsProps: any}) => {
+  const {pointsProps} = props;
 
-const Map = () => {
   return (
-    <View style={{flex: 1, height: '100%', width: '100%'}}>
-      <MapboxGL.MapView style={styles.map}>
-        <MapboxGL.Camera />
+    <View style={styles.mapGeneral}>
+      <MapboxGL.MapView>
+        <MapboxGL.Camera
+          zoomLevel={15}
+          centerCoordinate={[-45.88108891799865, -23.198347902841164]}
+        />
         <MapParentBox>
-          {points.map((point) => (
-            <MapboxGL.PointAnnotation
-              key={point[0]}
-              id="pointAnnotation"
-              coordinate={point}>
-              <View style={styles.mapStyle} />
-            </MapboxGL.PointAnnotation>
-          ))}
+          <MapboxGL.ShapeSource
+            hitbox={{width: 10, height: 10}}
+            id="exampleShapeSource"
+            shape={pointsProps}>
+            <MapboxGL.CircleLayer
+              id="pointCircles"
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                circleStrokeColor: '#FFF',
+                circleStrokeWidth: 2,
+                circleRadius: 15,
+                circleColor: '#459',
+              }}
+            />
+          </MapboxGL.ShapeSource>
         </MapParentBox>
       </MapboxGL.MapView>
     </View>
@@ -48,6 +55,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderWidth: 3,
   },
+  mapGeneral: {flex: 1, height: '100%', width: '100%'},
 });
 
 export default Map;
