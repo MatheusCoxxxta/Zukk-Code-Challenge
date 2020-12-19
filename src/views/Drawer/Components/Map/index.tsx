@@ -15,13 +15,11 @@ MapboxGL.setAccessToken(
 const Map = (props: {pointsProps: any}) => {
   const {pointsProps} = props;
 
-  const [points, setPoints] = useState<any>(pointsProps);
   const [point, setPoint] = useState<any>();
 
   const handleSave = async (e: Feature<Geometry, GeoJsonProperties>) => {
-    setPoint(e);
-    setPoints({type: 'Feature', features: [...pointsProps.features, e]});
-    console.log({type: 'Feature', features: [...pointsProps.features, e]});
+    setPoint(e.geometry.coordinates); // lint bug => no sintaxe error
+    console.log(e.geometry.coordinates); // lint bug => no sintaxe error
   };
 
   return (
@@ -32,21 +30,23 @@ const Map = (props: {pointsProps: any}) => {
           centerCoordinate={[-45.88108891799865, -23.198347902841164]}
         />
         <MapParentBox>
-          <MapboxGL.ShapeSource
-            hitbox={{width: 10, height: 10}}
-            id="exampleShapeSource"
-            shape={points}>
-            <MapboxGL.CircleLayer
-              id="pointCircles"
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                circleStrokeColor: '#FFF',
-                circleStrokeWidth: 2,
-                circleRadius: 15,
-                circleColor: '#459',
-              }}
-            />
-          </MapboxGL.ShapeSource>
+          {pointsProps.map((myPoint: any) => (
+            <MapboxGL.PointAnnotation
+              key={myPoint.id}
+              id="pointAnnotation"
+              coordinate={myPoint.coordinates}>
+              <View style={styles.pointStyle} />
+            </MapboxGL.PointAnnotation>
+          ))}
+
+          {point ? (
+            <MapboxGL.PointAnnotation
+              key={point[0]}
+              id="pointAnnotation"
+              coordinate={point}>
+              <View style={styles.pointStyle} />
+            </MapboxGL.PointAnnotation>
+          ) : null}
         </MapParentBox>
       </MapboxGL.MapView>
     </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  mapStyle: {
+  pointStyle: {
     height: 30,
     width: 30,
     backgroundColor: '#00cccc',
