@@ -14,6 +14,10 @@ MapboxGL.setAccessToken(
 const Map = (props: {pointsProps: any}) => {
   const {pointsProps} = props;
 
+  const deletePoint = (point: any) => {
+    console.log(point);
+  };
+
   return (
     <View style={styles.mapGeneral}>
       <MapboxGL.MapView>
@@ -22,21 +26,15 @@ const Map = (props: {pointsProps: any}) => {
           centerCoordinate={[-45.88108891799865, -23.198347902841164]}
         />
         <MapParentBox>
-          <MapboxGL.ShapeSource
-            hitbox={{width: 10, height: 10}}
-            id="exampleShapeSource"
-            shape={pointsProps}>
-            <MapboxGL.CircleLayer
-              id="pointCircles"
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                circleStrokeColor: '#FFF',
-                circleStrokeWidth: 2,
-                circleRadius: 15,
-                circleColor: '#459',
-              }}
-            />
-          </MapboxGL.ShapeSource>
+          {pointsProps.map((point: any) => (
+            <MapboxGL.PointAnnotation
+              key={point.id}
+              id="pointAnnotation"
+              onSelected={() => deletePoint(point)}
+              coordinate={point.coordinates}>
+              <View style={styles.pointStyle} />
+            </MapboxGL.PointAnnotation>
+          ))}
         </MapParentBox>
       </MapboxGL.MapView>
     </View>
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  mapStyle: {
+  pointStyle: {
     height: 30,
     width: 30,
     backgroundColor: '#00cccc',
