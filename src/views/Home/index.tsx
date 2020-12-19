@@ -1,17 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
 
-import {Title, SubHeading, MapParentBox} from './styles';
+import Header from './Components/Header';
+import Map from './Components/Map';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MapboxGL from '@react-native-mapbox-gl/maps';
@@ -28,11 +19,8 @@ const Home = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Title>Seja Bem Vindo!</Title>
-          <SubHeading>Aplicação Code Challenge da Zukk</SubHeading>
-          <MapParentBox>
-            <MapboxGL.MapView style={styles.map} />
-          </MapParentBox>
+          <Header />
+          <Map />
         </ScrollView>
       </SafeAreaView>
     </>
