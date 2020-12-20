@@ -13,7 +13,6 @@ MapboxGL.setAccessToken(
 
 const Map = (props: {pointsProps: any}) => {
   const {pointsProps} = props;
-  console.log(pointsProps[0]);
 
   const deletePoint = (point: any) => {
     console.log(point);

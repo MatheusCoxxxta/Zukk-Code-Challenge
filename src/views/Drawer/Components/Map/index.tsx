@@ -17,7 +17,6 @@ const Map = (props: {
   savePoint: (lat: number, long: number) => void;
 }) => {
   const {pointsProps} = props;
-  console.log(pointsProps[0]);
 
   const [point, setPoint] = useState<any>();
 
