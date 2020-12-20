@@ -30,7 +30,6 @@ const Map = (props: {
   };
 
   const handleSavePoint = () => {
-    console.log('Data: ', [pointLat, pointLong]);
     if (pointLat && pointLong) {
       props.savePoint(pointLat, pointLong);
       navigation.goBack();

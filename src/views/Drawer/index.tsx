@@ -40,8 +40,6 @@ const Home = () => {
       long,
     };
 
-    console.log(data);
-
     const realm = await getRealm();
 
     try {
