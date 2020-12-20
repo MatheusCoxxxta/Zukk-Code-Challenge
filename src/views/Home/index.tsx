@@ -6,6 +6,7 @@ import Footer from './Components/Footer';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import getRealm from '../../services/realm';
+import {useNavigation} from '@react-navigation/native';
 
 MapboxGL.setAccessToken(
   'pk.eyJ1IjoibWF0aGV1c2Nvc3RhMjciLCJhIjoiY2tpdXo2MXNuMDU0bzJxcXR5NmF2bG1oeSJ9.pvbXRP9FDpW2IQYi77HM8w',
@@ -14,19 +15,34 @@ MapboxGL.setAccessToken(
 const Home = () => {
   const [PointsArray, setPointsArray] = useState([]);
 
-  useEffect(() => {
-    const getPoints = async () => {
-      const realm = await getRealm();
+  const navigation = useNavigation();
 
-      try {
-        setPointsArray(Array.from(realm.objects('Point')));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const getPoints = async () => {
+    const realm = await getRealm();
+
+    try {
+      setPointsArray(Array.from(realm.objects('Point')));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getPoints();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const deletePoint = async (point: number) => {
+    const realm = await getRealm();
+
+    realm.write(() => {
+      realm.delete(realm.objectForPrimaryKey('Point', point));
+    });
 
     getPoints();
-  }, []);
+  };
 
   return (
     <>
@@ -36,7 +52,7 @@ const Home = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Header />
-          <Map pointsProps={PointsArray} />
+          <Map pointsProps={PointsArray} deletePoint={deletePoint} />
           <Footer />
         </ScrollView>
       </SafeAreaView>

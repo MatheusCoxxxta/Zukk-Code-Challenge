@@ -1,21 +1,21 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-
 import {View} from 'react-native';
-
 import {MapParentBox} from './styles';
-
 import MapboxGL from '@react-native-mapbox-gl/maps';
 
 MapboxGL.setAccessToken(
   'pk.eyJ1IjoibWF0aGV1c2Nvc3RhMjciLCJhIjoiY2tpdXo2MXNuMDU0bzJxcXR5NmF2bG1oeSJ9.pvbXRP9FDpW2IQYi77HM8w',
 );
 
-const Map = (props: {pointsProps: any}) => {
+const Map = (props: {
+  pointsProps: any;
+  deletePoint: (point: number) => void;
+}) => {
   const {pointsProps} = props;
 
-  const deletePoint = (point: any) => {
-    console.log(point);
+  const handleDelete = async (point: any) => {
+    props.deletePoint(point.id);
   };
 
   return (
@@ -31,7 +31,8 @@ const Map = (props: {pointsProps: any}) => {
                 <MapboxGL.PointAnnotation
                   key={point.id}
                   id="pointAnnotation"
-                  onSelected={() => deletePoint(point)}
+                  selected={true}
+                  onSelected={() => handleDelete(point)}
                   coordinate={[point.lat, point.long]}>
                   <View style={styles.pointStyle} />
                 </MapboxGL.PointAnnotation>
