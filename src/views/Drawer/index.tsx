@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import Header from './Components/Header';
 import Map from './Components/Map';
-import Footer from './Components/Footer';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import getRealm from '../../services/realm';
@@ -63,7 +62,6 @@ const Home = () => {
           style={styles.scrollView}>
           <Header />
           <Map pointsProps={PointsArray} savePoint={savePoint} />
-          <Footer />
         </ScrollView>
       </SafeAreaView>
     </>
