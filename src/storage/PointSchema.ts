@@ -4,8 +4,8 @@ export default class PointSchema {
     primaryKey: 'id',
     properties: {
       id: {type: 'int', indexed: true},
-      lat: 'int',
-      long: 'int',
+      lat: 'double',
+      long: 'double',
     },
   };
 }
