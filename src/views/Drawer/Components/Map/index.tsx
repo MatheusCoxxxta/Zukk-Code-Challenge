@@ -12,19 +12,29 @@ MapboxGL.setAccessToken(
   'pk.eyJ1IjoibWF0aGV1c2Nvc3RhMjciLCJhIjoiY2tpdXo2MXNuMDU0bzJxcXR5NmF2bG1oeSJ9.pvbXRP9FDpW2IQYi77HM8w',
 );
 
-const Map = (props: {pointsProps: any}) => {
+const Map = (props: {
+  pointsProps: any;
+  savePoint: (lat: number, long: number) => void;
+}) => {
   const {pointsProps} = props;
 
   const [point, setPoint] = useState<any>();
 
-  const handleSave = async (e: Feature<Geometry, GeoJsonProperties>) => {
+  const [pointLat, setPointLat] = useState<any>();
+  const [pointLong, setPointLong] = useState<any>();
+
+  const handleSavePoint = async (e: Feature<Geometry, GeoJsonProperties>) => {
     setPoint(e.geometry.coordinates); // lint bug => no sintaxe error
-    console.log(e.geometry.coordinates); // lint bug => no sintaxe error
+
+    setPointLat(e.geometry.coordinates[0]);
+    setPointLong(e.geometry.coordinates[1]);
+
+    props.savePoint(pointLat, pointLong);
   };
 
   return (
     <View style={styles.mapGeneral}>
-      <MapboxGL.MapView onPress={(e) => handleSave(e)} style={styles.map}>
+      <MapboxGL.MapView onPress={(e) => handleSavePoint(e)} style={styles.map}>
         <MapboxGL.Camera
           zoomLevel={15}
           centerCoordinate={[-45.88108891799865, -23.198347902841164]}
