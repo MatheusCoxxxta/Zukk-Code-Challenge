@@ -8,13 +8,11 @@ const Footer = () => {
   return (
     <>
       <Foot>
-        <Button>
-          <ButtonText
-            onPress={() => {
-              navigation.navigate('Drawer');
-            }}>
-            Editar Layer
-          </ButtonText>
+        <Button
+          onPress={() => {
+            navigation.navigate('Drawer');
+          }}>
+          <ButtonText>Editar Pontos</ButtonText>
         </Button>
       </Foot>
     </>
