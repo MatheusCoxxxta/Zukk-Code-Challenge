@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import Header from './Components/Header';
 import Map from './Components/Map';
 import Footer from './Components/Footer';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import PointsArray from '../../mock/PointsArray';
 import getRealm from '../../services/realm';
 
 MapboxGL.setAccessToken(
@@ -17,13 +16,17 @@ const generateId = () => {
 };
 
 const Home = () => {
+  const [PointsArray, setPointsArray] = useState([]);
+
   useEffect(() => {
     const getPoints = async () => {
       const realm = await getRealm();
 
-      const data = realm.objects('Point');
-
-      console.log(data);
+      try {
+        setPointsArray(Array.from(realm.objects('Point')));
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     getPoints();
