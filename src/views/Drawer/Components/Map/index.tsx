@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 
 import {View} from 'react-native';
@@ -17,6 +17,7 @@ const Map = (props: {
   savePoint: (lat: number, long: number) => void;
 }) => {
   const {pointsProps} = props;
+  console.log(pointsProps[0]);
 
   const [point, setPoint] = useState<any>();
 
@@ -40,14 +41,16 @@ const Map = (props: {
           centerCoordinate={[-45.88108891799865, -23.198347902841164]}
         />
         <MapParentBox>
-          {pointsProps.map((myPoint: any) => (
-            <MapboxGL.PointAnnotation
-              key={myPoint.id}
-              id="pointAnnotation"
-              coordinate={[myPoint.coordinates.lat, myPoint.coordinates.long]}>
-              <View style={styles.pointStyle} />
-            </MapboxGL.PointAnnotation>
-          ))}
+          {pointsProps !== []
+            ? pointsProps.map((myPoint: any) => (
+                <MapboxGL.PointAnnotation
+                  key={myPoint.id}
+                  id="pointAnnotation"
+                  coordinate={[myPoint.lat, myPoint.long]}>
+                  <View style={styles.pointStyle} />
+                </MapboxGL.PointAnnotation>
+              ))
+            : null}
 
           {point ? (
             <MapboxGL.PointAnnotation

@@ -13,6 +13,7 @@ MapboxGL.setAccessToken(
 
 const Map = (props: {pointsProps: any}) => {
   const {pointsProps} = props;
+  console.log(pointsProps[0]);
 
   const deletePoint = (point: any) => {
     console.log(point);
@@ -26,15 +27,17 @@ const Map = (props: {pointsProps: any}) => {
           centerCoordinate={[-45.88108891799865, -23.198347902841164]}
         />
         <MapParentBox>
-          {pointsProps.map((point: any) => (
-            <MapboxGL.PointAnnotation
-              key={point.id}
-              id="pointAnnotation"
-              onSelected={() => deletePoint(point)}
-              coordinate={[point.coordinates.lat, point.coordinates.long]}>
-              <View style={styles.pointStyle} />
-            </MapboxGL.PointAnnotation>
-          ))}
+          {pointsProps !== []
+            ? pointsProps.map((point: any) => (
+                <MapboxGL.PointAnnotation
+                  key={point.id}
+                  id="pointAnnotation"
+                  onSelected={() => deletePoint(point)}
+                  coordinate={[point.lat, point.long]}>
+                  <View style={styles.pointStyle} />
+                </MapboxGL.PointAnnotation>
+              ))
+            : null}
         </MapParentBox>
       </MapboxGL.MapView>
     </View>
