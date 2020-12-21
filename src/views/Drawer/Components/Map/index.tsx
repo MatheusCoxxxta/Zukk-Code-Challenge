@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {View} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import {MapParentBox, Foot, Button, ButtonText} from './styles';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Feature, Geometry, GeoJsonProperties} from 'geojson';
@@ -19,6 +19,7 @@ const Map = (props: {
   const [point, setPoint] = useState<any>();
   const [pointLat, setPointLat] = useState<any>();
   const [pointLong, setPointLong] = useState<any>();
+  const [loading, setLoading] = useState<boolean>();
 
   const navigation = useNavigation();
 
@@ -30,6 +31,7 @@ const Map = (props: {
   };
 
   const handleSavePoint = () => {
+    setLoading(true);
     if (pointLat && pointLong) {
       props.savePoint(pointLat, pointLong);
       navigation.goBack();
@@ -70,12 +72,16 @@ const Map = (props: {
         </MapboxGL.MapView>
       </View>
       <Foot>
-        <Button
-          disabled={!point ? true : false}
-          style={!point ? styles.btnDisabled : null}
-          onPress={() => handleSavePoint()}>
-          <ButtonText> Salvar </ButtonText>
-        </Button>
+        {!loading ? (
+          <Button
+            disabled={!point ? true : false}
+            style={!point ? styles.btnDisabled : null}
+            onPress={() => handleSavePoint()}>
+            <ButtonText> Salvar </ButtonText>
+          </Button>
+        ) : (
+          <ActivityIndicator size="small" color="#459" />
+        )}
       </Foot>
     </>
   );
