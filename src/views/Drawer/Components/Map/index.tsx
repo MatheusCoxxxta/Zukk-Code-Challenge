@@ -70,7 +70,10 @@ const Map = (props: {
         </MapboxGL.MapView>
       </View>
       <Foot>
-        <Button onPress={() => handleSavePoint()}>
+        <Button
+          disabled={!point ? true : false}
+          style={!point ? styles.btnDisabled : null}
+          onPress={() => handleSavePoint()}>
           <ButtonText> Salvar </ButtonText>
         </Button>
       </Foot>
@@ -85,12 +88,15 @@ const styles = StyleSheet.create({
   pointStyle: {
     height: 30,
     width: 30,
-    backgroundColor: '#00cccc',
+    backgroundColor: '#459',
     borderRadius: 50,
     borderColor: '#fff',
     borderWidth: 3,
   },
   mapGeneral: {flex: 1, height: '100%', width: '100%'},
+  btnDisabled: {
+    backgroundColor: '#CCC',
+  },
 });
 
 export default Map;
