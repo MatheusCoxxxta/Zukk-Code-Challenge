@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import {MapParentBox} from './styles';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 
@@ -32,7 +32,18 @@ const Map = (props: {
                   key={point.id}
                   id="pointAnnotation"
                   selected={true}
-                  onSelected={() => handleDelete(point)}
+                  onSelected={() => {
+                    Alert.alert('Atenção!', 'Gostaria de deletar o ponto?', [
+                      {
+                        text: 'Cancelar',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Sim',
+                        onPress: () => handleDelete(point),
+                      },
+                    ]);
+                  }}
                   coordinate={[point.lat, point.long]}>
                   <View style={styles.pointStyle} />
                 </MapboxGL.PointAnnotation>
