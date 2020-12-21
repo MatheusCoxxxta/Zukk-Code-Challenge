@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   pointStyle: {
     height: 30,
     width: 30,
-    backgroundColor: '#00cccc',
+    backgroundColor: '#459',
     borderRadius: 50,
     borderColor: '#fff',
     borderWidth: 3,
