@@ -6,9 +6,9 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Feature, Geometry, GeoJsonProperties} from 'geojson';
 import {useNavigation} from '@react-navigation/native';
 
-MapboxGL.setAccessToken(
-  'pk.eyJ1IjoibWF0aGV1c2Nvc3RhMjciLCJhIjoiY2tpdXo2MXNuMDU0bzJxcXR5NmF2bG1oeSJ9.pvbXRP9FDpW2IQYi77HM8w',
-);
+import ENV from '../../../../../env';
+
+MapboxGL.setAccessToken(ENV.dev.MAPBOX_KEY);
 
 const Map = (props: {
   pointsProps: any;
