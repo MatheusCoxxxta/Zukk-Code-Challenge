@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  Platform,
+  Alert,
+  ToastAndroid,
+} from 'react-native';
 import Header from './Components/Header';
 import Map from './Components/Map';
 import Footer from './Components/Footer';
@@ -23,7 +31,21 @@ const Home = () => {
     try {
       setPointsArray(Array.from(realm.objects('Point')));
     } catch (error) {
-      console.log(error);
+      Platform.OS !== 'android'
+        ? Alert.alert(
+            'Ocorreu um erro!',
+            'Algo falhou ao tentar carregar pontos...',
+            [
+              {
+                text: 'Ok',
+                style: 'cancel',
+              },
+            ],
+          )
+        : ToastAndroid.show(
+            'Algo falhou ao tentar carregar pontos...',
+            ToastAndroid.LONG,
+          );
     }
   };
 
@@ -36,10 +58,27 @@ const Home = () => {
 
   const deletePoint = async (point: number) => {
     const realm = await getRealm();
-
-    realm.write(() => {
-      realm.delete(realm.objectForPrimaryKey('Point', point));
-    });
+    try {
+      realm.write(() => {
+        realm.delete(realm.objectForPrimaryKey('Point', point));
+      });
+    } catch (error) {
+      Platform.OS !== 'android'
+        ? Alert.alert(
+            'Ocorreu um erro!',
+            'Algo falhou ao tentar deletar o ponto...',
+            [
+              {
+                text: 'Ok',
+                style: 'cancel',
+              },
+            ],
+          )
+        : ToastAndroid.show(
+            'Algo falhou ao tentar deletar o ponto...',
+            ToastAndroid.LONG,
+          );
+    }
 
     getPoints();
   };

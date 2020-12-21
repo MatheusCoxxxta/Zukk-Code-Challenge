@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  Platform,
+  Alert,
+  ToastAndroid,
+} from 'react-native';
 import Header from './Components/Header';
 import Map from './Components/Map';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -24,7 +32,21 @@ const Home = () => {
       try {
         setPointsArray(Array.from(realm.objects('Point')));
       } catch (error) {
-        console.log(error);
+        Platform.OS !== 'android'
+          ? Alert.alert(
+              'Ocorreu um erro!',
+              'Algo falhou ao tentar carregar pontos...',
+              [
+                {
+                  text: 'Ok',
+                  style: 'cancel',
+                },
+              ],
+            )
+          : ToastAndroid.show(
+              'Algo falhou ao tentar carregar pontos...',
+              ToastAndroid.LONG,
+            );
       }
     };
 
@@ -47,7 +69,21 @@ const Home = () => {
         realm.create('Point', data);
       });
     } catch (error) {
-      console.log('Erro!');
+      Platform.OS !== 'android'
+        ? Alert.alert(
+            'Ocorreu um erro!',
+            'Algo falhou ao tentar criar novo ponto...',
+            [
+              {
+                text: 'Ok',
+                style: 'cancel',
+              },
+            ],
+          )
+        : ToastAndroid.show(
+            'Algo falhou ao tentar criar novo ponto...',
+            ToastAndroid.LONG,
+          );
     }
   };
 
