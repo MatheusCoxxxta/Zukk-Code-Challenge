@@ -15,8 +15,8 @@ import {Title, SubHeading} from './styles';
 const Header = () => {
   return (
     <>
-      <Title>Editando Layer</Title>
-      <SubHeading>Aplicação Code Challenge da Zukk</SubHeading>
+      <Title>Editando Pontos</Title>
+      <SubHeading>Toque onde quer um novo ponto e em "Salvar".</SubHeading>
     </>
   );
 };
